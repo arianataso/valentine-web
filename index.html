@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Diary</title>
+
+<style>
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(135deg,#ff5f9e,#ff9ad5);
+color:white;
+overflow:hidden;
+}
+
+.page{
+display:none;
+height:100vh;
+overflow-y:auto;
+padding:20px;
+animation:fade 1s;
+}
+
+@keyframes fade{
+from{opacity:0}
+to{opacity:1}
+}
+
+h1,h2,h3{
+text-shadow:2px 2px 6px rgba(0,0,0,0.4);
+}
+
+input,button{
+padding:12px;
+margin:6px;
+border:none;
+border-radius:25px;
+font-size:16px;
+}
+
+button{
+background:#ff2d6f;
+color:white;
+box-shadow:0 0 15px rgba(255,255,255,0.5);
+}
+
+.card{
+background:rgba(255,255,255,0.2);
+border-radius:25px;
+padding:15px;
+margin-bottom:15px;
+backdrop-filter:blur(6px);
+}
+
+.heart{
+font-size:90px;
+animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+0%{transform:scale(1)}
+50%{transform:scale(1.2)}
+100%{transform:scale(1)}
+}
+
+.flower{
+position:absolute;
+font-size:20px;
+animation:fly 2s forwards;
+pointer-events:none;
+}
+
+@keyframes fly{
+0%{opacity:1;transform:translateY(0)}
+100%{opacity:0;transform:translateY(-150px)}
+}
+
+.comment{
+background:rgba(0,0,0,0.2);
+padding:10px;
+border-radius:15px;
+margin:5px 0;
+}
+
+.npc{
+background:rgba(255,255,255,0.25);
+padding:12px;
+border-radius:15px;
+font-style:italic;
+}
+
+.game-btn{
+font-size:30px;
+}
+
+footer{
+text-align:center;
+opacity:0.7;
+margin:30px 0;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div class="page" id="login" style="display:block;text-align:center;">
+<h1>💖 Valentine Login 💖</h1>
+<p>Masuk dulu ya 😼</p>
+<input id="user" placeholder="Nama (oktaviana)">
+<input id="pass" type="password" placeholder="Password (i love you)">
+<br>
+<button onclick="login()">Login</button>
+</div>
+
+<!-- HOME -->
+<div class="page" id="home" style="text-align:center;">
+<h1>I love you more 💕</h1>
+<div class="heart">❤️</div>
+<p>Pencet hatiku</p>
+<button onclick="openDiary()">❤️ Masuk Diary</button>
+</div>
+
+<!-- DIARY -->
+<div class="page" id="diary">
+
+<div class="card">
+<h2>📖 Diary Oktaviana</h2>
+<p>
+Halo my name is Mora umur gue 16 tahun, ulang tahun 5 Oktober 2009.  
+Gua anak silat dan atlet. I’m from kumpai wkwk.  
+Gue orang yang disayang baso 😆  
+I like sport and jajan 😼  
+(aku gampang badmood wlee 😓)
+</p>
+</div>
+
+<div class="card">
+<h2>💗 Tentang Dia</h2>
+<p><b>MY FAVORITE</b></p>
+<p>
+Minuman: Smoothies<br>
+Makanan: Pedas, Asem<br>
+Hobi: Silat, Bobo<br>
+Suka: Jalan gak jelas
+</p>
+<p>
+Gue anak yang punya badan lemah, darah rendah, tipes, asam lambung, mageran, badmood-an  
+tapi gapapa baso tetap suka 😼
+</p>
+</div>
+
+<div class="card">
+<h2>📜 Sejarah Kita</h2>
+<p>
+Gw dan baso ditemukan pertama kali tahun 2023.  
+Setelah putus kamu lost contact dan ketemu lagi tahun 2026.  
+Ga nyangka ketemu orang aneh itu lagi 😅  
+Sekarang gua udah ga bocil lagi wlee 👻  
+Gw ramah, baik hati, imut, cantik, lucu, aneh, sisanya pokoknya wkwk 🙈  
+Kalau lu baca (untuk saya nata) jangan ketawa ya 😛
+</p>
+</div>
+
+<div class="card">
+<h2>🧑‍🚀 NPC</h2>
+<div class="npc" id="npcText">NPC: Diary kamu lucu kaya kamu.</div>
+<button onclick="npcTalk()">NPC Ngomong Lagi</button>
+</div>
+
+<div class="card">
+<h2>💬 Komentar Tentang Kamu</h2>
+<div class="comment">💗 kamu lucu banget hari ini</div>
+<div class="comment">🌸 baca diary ini bikin senyum</div>
+<div class="comment">💞 jatuh cinta lagi dan lagi</div>
+<div class="comment">🥺 kok bisa sih seimut ini</div>
+
+<p id="randomComment">Klik tombol buat lihat komentarku 😼</p>
+<button onclick="randomComment()">💬 Komentar Random</button>
+</div>
+
+<div class="card">
+<h2>🎮 Game Klik Hati</h2>
+<p>Klik sampai 10 💖</p>
+<button class="game-btn" onclick="game()">❤️</button>
+<p id="score">Score: 0</p>
+</div>
+
+<div class="card">
+<h2>📨 Kirim ke WhatsApp</h2>
+<input id="nama" placeholder="Nama kamu">
+<input id="alamat" placeholder="Alamat pengagum">
+<br>
+<button onclick="sendWA()">Kirim ke WA</button>
+</div>
+
+<footer>
+💐 Valentine Web by Kamu  
+</footer>
+
+</div>
+
+<script>
+let skor=0;
+
+function login(){
+let u=document.getElementById("user").value;
+let p=document.getElementById("pass").value;
+if(u=="oktaviana" && p=="i love you"){
+document.getElementById("login").style.display="none";
+document.getElementById("home").style.display="block";
+}else{
+alert("Salah 😛");
+}
+}
+
+function openDiary(){
+document.getElementById("home").style.display="none";
+document.getElementById("diary").style.display="block";
+}
+
+function game(){
+skor++;
+document.getElementById("score").innerText="Score: "+skor;
+if(skor==10){
+alert("Kamu menang 💖");
+}
+}
+
+function sendWA(){
+let nama=document.getElementById("nama").value;
+let alamat=document.getElementById("alamat").value;
+let msg=`Hai 💖%0ANama: ${nama}%0AAlamat Pengagum: ${alamat}`;
+window.open("https://wa.me/6289516129314?text="+msg);
+}
+
+let npcLines=[
+"Diary kamu lucu kaya kamu 😆",
+"Aku suka cara kamu nulis perasaan 💕",
+"Kamu itu NPC favorit di hidupku 😼",
+"Kalau cinta itu game, kamu final boss 💖",
+"Jangan berhenti nulis ya, lucu soalnya 🌸"
+];
+
+function npcTalk(){
+let r=Math.floor(Math.random()*npcLines.length);
+document.getElementById("npcText").innerText="NPC: "+npcLines[r];
+}
+
+let comments=[
+"Kamu itu lucu pas tantrum 😆",
+"Mood kamu susah ditebak tapi bikin kangen 💗",
+"Kalau kamu marah malah makin imut 😼",
+"Kamu unik, random tapi bikin nyaman 😳",
+"Tantrum kamu kayak drama Valentine 🌸",
+"Ngambek kamu tuh minta diperhatiin 🥺",
+"Susah nebak pikiranmu, gampang jatuh cinta sama senyummu 💞",
+"Kamu marah tapi tetap mikirin orang lain 💖",
+"Aku suka kamu yang random 😝",
+"Kamu paket lengkap: tantrum, lucu, misterius 💐"
+];
+
+function randomComment(){
+let r=Math.floor(Math.random()*comments.length);
+document.getElementById("randomComment").innerText=comments[r];
+}
+
+document.addEventListener("click",function(e){
+for(let i=0;i<5;i++){
+let f=document.createElement("div");
+f.innerHTML="🌸";
+f.className="flower";
+f.style.left=(e.clientX+Math.random()*40-20)+"px";
+f.style.top=(e.clientY+Math.random()*40-20)+"px";
+document.body.appendChild(f);
+setTimeout(()=>f.remove(),2000);
+}
+});
+</script>
+
+</body>
+  </html>
